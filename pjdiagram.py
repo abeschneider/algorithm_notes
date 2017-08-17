@@ -33,16 +33,24 @@ def draw(cr, width, height):
     cr.rectangle(0.25, 0.25, 0.5, 0.5)
     cr.stroke()
 
-def draw_array(ctx, pos, contents, cell_width=20, cell_height=20):
+def draw_array(ctx, pos, contents, cell_width=20, cell_height=20, highlight={}):
     ctx.set_line_width(1)
 
     for i, value in enumerate(contents):
         ctx.rectangle(pos[0] + i*cell_width, pos[1], cell_width, cell_height)
 
-    ctx.set_source_rgb(0.8, 0.8, 0.8)
-    ctx.fill_preserve()
-    ctx.set_source_rgb(0.0, 0.0, 0.0)
-    ctx.stroke()
+        ctx.set_source_rgb(0.8, 0.8, 0.8)
+        ctx.fill_preserve()
+
+        if i in highlight:
+            ctx.set_source_rgb(1, 0, 0)
+            ctx.set_line_width(4.0)
+        else:
+            ctx.set_source_rgb(0, 0, 0)
+            ctx.set_line_width(1.0)
+
+        # ctx.set_source_rgb(0.0, 0.0, 0.0)
+        ctx.stroke()
 
     for i, value in enumerate(contents):
         x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = ctx.text_extents(str(value))
@@ -66,7 +74,7 @@ def draw_binary_tree(ctx, pos, contents, ply=1, index=0, radius=10, total_distan
         ctx.move_to(pos[0], pos[1])
         ctx.line_to(left_pos[0], left_pos[1])
         ctx.set_source_rgb(0, 0, 0)
-        ctx.set_line_width(1.0)        
+        ctx.set_line_width(1.0)
         ctx.stroke()
 
         draw_binary_tree(ctx, left_pos, contents, ply=ply+1,
