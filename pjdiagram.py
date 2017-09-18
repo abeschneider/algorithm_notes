@@ -52,6 +52,8 @@ def draw_array(ctx, pos, contents, cell_width=20, cell_height=20, highlight={}):
         # ctx.set_source_rgb(0.0, 0.0, 0.0)
         ctx.stroke()
 
+    ctx.set_source_rgb(0, 0, 0)
+    ctx.set_line_width(1.0)
     for i, value in enumerate(contents):
         x_bearing, y_bearing, text_width, text_height, x_advance, y_advance = ctx.text_extents(str(value))
         ctx.move_to(pos[0] + i*cell_width + cell_width/2.0 - text_width/2.0, pos[1] + cell_height/2.0 + text_height/2.0)

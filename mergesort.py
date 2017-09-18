@@ -1,8 +1,10 @@
 import numpy as np
 
 from IPython.display import clear_output
-from pjdiagram import *
 from ipywidgets import *
+
+from step import StepExample
+from pjdiagram import *
 
 def merge(left, right):
     i = j = 0
@@ -33,54 +35,22 @@ def mergesort(lst):
     while i < len(lst):
         left = lst[i] if isinstance(lst[i], list) else [lst[i]]
         i += 1
+
         right = lst[i] if isinstance(lst[i], list) else [lst[i]]
         i += 1
-        if i+1 == len(lst):
-            right.extend(lst[i] if isinstance(lst[i], list) else [lst[i]])
-            i += 1
 
         result.append(merge(left, right))
     return result
-
-class StepExample(object):
-    def __init__(self):
-        self.reset_button = widgets.Button(
-            description='',
-            disabled=False,
-            button_style='',
-            tooltip='reset',
-            layout=Layout(width='80px', height='40px'),
-            icon='fa-refresh'
-        )
-
-        self.prev_button = widgets.Button(
-            description='',
-            disabled=False,
-            button_style='',
-            tooltip='go backward',
-            layout=Layout(width='80px', height='40px'),
-            icon='fa-chevron-left'
-        )
-
-        self.next_button = widgets.Button(
-            description='',
-            disabled=False,
-            button_style='',
-            tooltip='go forward',
-            layout=Layout(width='80px', height='40px'),
-            icon='fa-chevron-right'
-        )
 
 def flatten(lst):
     if isinstance(lst[0], list):
         return [item for sublst in lst for item in sublst]
     return lst
 
-class Example1(StepExample):
+class MergeSortExample(StepExample):
     def __init__(self, lst):
-        super(Example1, self).__init__()
+        super(MergeSortExample, self).__init__()
 
-        # self.data = [5, 2, 1, 20, 10, 3, 4, 80]
         self.original = lst
         self.data = list(self.original)
         self.prev_data = []
@@ -132,5 +102,5 @@ class Example1(StepExample):
         controls = HBox([self.prev_button, self.next_button, self.reset_button])
         display(controls)
 
-def example1(lst):
-    Example1(lst)()
+def merge_sort_example(lst):
+    MergeSortExample(lst)()
